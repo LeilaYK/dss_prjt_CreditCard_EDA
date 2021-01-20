@@ -103,7 +103,7 @@ fig.show()
 <img src="https://user-images.githubusercontent.com/72811950/105197959-84fc4980-5b80-11eb-9525-a58570afd938.png" width="800" height="580"></img>
 - 12월에는 매출액이 증가하는 것을 볼 수 있다. 연말이라 사람들의 소비가 늘어난 것으로 보임.  
   
-2) 2017년의 시즌별 매출(월별로 확인)
+2) 2017년 시즌별 매출(월별로 확인)
 ```
 credit_2017 = credit[credit["year"] ==2017]
 seasonal_sales = credit_2017.groupby("month")["amount"].sum().reset_index(name="seasonal_sales")
@@ -212,8 +212,28 @@ fig.show()
 - 20시에는 총 매출액이 가장 높고 한 건당 결제되는 금액도 높다. 술자리 때문이 아닐까 추측
 - 다른 요일에 비해 금요일은 늦은 시간까지 매출이 높다.
 - 일요일은 평일에 비해 일찍 매출이 떨어지기 시작한다.(19시에 매출 정점을 찍고 떨어지기 시작한다.)
-- 평일에는 12시와 20에 매출이 상승하다가 떨어지는 반면 토요일과 일요일은 1시와 19시에 매출이 상승했다 떨어진다.
+- 평일에는 12시와 20에 매출이 상승하다가 떨어지는 반면 토요일과 일요일은 13시와 19시에 매출이 상승했다 떨어진다.  
+  
+5) 공휴일과 평일 시간대 매출 비교
+```
+non_holyday = credit[credit['holyday']==0]
+holyday = credit[credit['holyday']==1]
+non_holyday_amount_mean = non_holyday.groupby('hour')['amount'].sum().reset_index()
+holyday_amount_mean = holyday.groupby('hour')['amount'].sum().reset_index()
 
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=non_holyday_amount_mean["hour"], y=non_holyday_amount_mean["amount"],\
+                         name="비공휴일", marker_color="blue"))
+fig.add_trace(go.Scatter(x=holyday_amount_mean["hour"], y=holyday_amount_mean["amount"],\
+                         name="공휴일", marker_color="RED"))            
+fig.update_layout(title='시간대 평일 VS 휴일 평균 매출',
+                  xaxis_title='시간',
+                  yaxis_title='평균 매출',
+                  font_size=12)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105204185-3d2cf080-5b87-11eb-9ef4-5c02b1129877.png" width="700" height="500"></img>
+- 시간대 매출 확인 결과 공휴일보다 평일에 사람들의 소비가 높았다.
 
 
 ### 4) 할부 내역 분석
