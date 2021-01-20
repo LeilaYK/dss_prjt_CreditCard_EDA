@@ -121,9 +121,44 @@ fig.update_layout(title='시즌별 매출',
 fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105198719-49ae4a80-5b81-11eb-8210-68162ad201da.png" width="700" height="500"></img>  
-- 2년간의 정보가 있지만 2016년 하반기와 2018년 상반기 데이터가 합쳐진 것이라서 주변상황(물가, 소비자 심리 등)을 고려했을 때  
-  매출 비교가 제대로 이뤄지지 않을 것 같아 2017년 한 해의 데이터로만 분석 
-- 겨울에는 신용카드 사용이 줄어듦. 하지만 12월은 연말이라 사람들의 소비가 늘어난 것으로 보임.
+- 2년간의 정보가 있지만 2016년 하반기와 2018년 상반기 데이터가 합쳐진 것으로 주변상황(물가, 소비자 심리 등)을 고려했을 때  
+  매출 비교가 제대로 이뤄지지 않을 것으로 판단 2017년 한 해의 데이터로만 분석 
+- 겨울에는 신용카드 사용이 줄어듦. 하지만 12월은 연말이라 사람들의 소비가 늘어난 것으로 보임.  
+  
+3) 요일별 매출
+```
+credit_mon = credit[credit['days_of_week']==0]
+credit_tue = credit[credit['days_of_week']==1]
+credit_wed = credit[credit['days_of_week']==2]
+credit_thu = credit[credit['days_of_week']==3]
+credit_fri = credit[credit['days_of_week']==4]
+credit_sat = credit[credit['days_of_week']==5]
+credit_sun = credit[credit['days_of_week']==6]
+
+monday_amount = credit_mon["amount"].sum()
+tuesday_amount = credit_tue["amount"].sum()
+wednesday_amount = credit_wed["amount"].sum()
+thursday_amount = credit_thu["amount"].sum()
+firday_amount = credit_fri["amount"].sum()
+saturday_amount = credit_sat["amount"].sum()
+sunday_amount = credit_sun["amount"].sum()
+
+week_amount_data = {"요일":["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],\
+        "총매출":[monday_amount, tuesday_amount, wednesday_amount, thursday_amount, firday_amount, saturday_amount, sunday_amount]}
+weekly_amount_df = pd.DataFrame(week_amount_data)
+weekly_amount_df
+
+fig = go.Figure()
+data = go.Scatter(x=weekly_amount_df["요일"], y=weekly_amount_df["총매출"], marker_color="RED")
+fig.add_trace(data)
+fig.update_layout(title='요일별 매출',
+                  xaxis_title='요일',
+                  yaxis_title='매출액',
+                  font_size=12)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105201979-d27ab580-5b84-11eb-8dfe-ca9fd6b963d4.png" width="700" height="500"></img> 
+- 토요일의 매출이 가장 높고 다음으로 금요일이 높았다. 매출이 가장 적은 요일은 일요일이었다.
 
 
 
