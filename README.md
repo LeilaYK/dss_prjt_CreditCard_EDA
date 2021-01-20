@@ -56,20 +56,20 @@ holiday : 0은 공휴일 아닌 날, 1은 공휴일
 - 1775개의 상점에서 922522개의 신용카드가 조사됨  
   
   <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="240" height="300"></img>  
-3) 결측치 확인  
+#### 3) 결측치 확인  
 - installments 컬럼에 3345936개의 결측치 있음  
 <img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="700" height="500"></img>
 
 ### 3.3 전처리  
-1) 결측치 처리  
+#### 1) 결측치 처리  
 - installments에서 결측치는 일시불을 의미하므로 1로 채움  
-2) 이상치 확인 및 처리  
+#### 2) 이상치 확인 및 처리  
 - amount는 환불 때문에 -값이 존재. 분석을 위해 환불 건은 제거.  
 - amount컬럼에서 전체 상점 일일 총 매출의 1/4을 차지할 정도로 큰 이상치가 있음.  
   이상치라고 여겨지는 대부분의 결제건이 높은 금액의 물건을 판매하는 한 두 상점의 매출이어서 그 상점들의 매출을 다 제거하는 것이 바람직하지 않다고 생각하여 격차가 매우 큰 이상치 한 개만 제거하기로 함.  
 
 ### 3.4 시간에 따른 매출 분석  
-1) 월별 총 매출과 결제횟수
+#### 1) 월별 총 매출과 결제횟수
 ```
 monthly_sales = credit.groupby("year-month")["amount"].sum().reset_index(name="monthly_total_amount")
 monthly_count = credit.groupby("year-month").size().reset_index(name="monthly_count") 
@@ -103,7 +103,7 @@ fig.show()
 <img src="https://user-images.githubusercontent.com/72811950/105197959-84fc4980-5b80-11eb-9525-a58570afd938.png" width="800" height="580"></img>
 - 12월에는 매출액이 증가하는 것을 볼 수 있다. 연말이라 사람들의 소비가 늘어난 것으로 보임.  
   
-2) 2017년 시즌별 매출(월별로 확인)
+#### 2) 2017년 시즌별 매출(월별로 확인)
 ```
 credit_2017 = credit[credit["year"] ==2017]
 seasonal_sales = credit_2017.groupby("month")["amount"].sum().reset_index(name="seasonal_sales")
@@ -125,7 +125,7 @@ fig.show()
   매출 비교가 제대로 이뤄지지 않을 것으로 판단 2017년 한 해의 데이터로만 분석 
 - 겨울에는 신용카드 사용이 줄어듦. 하지만 12월은 연말이라 사람들의 소비가 늘어난 것으로 보임.  
   
-3) 요일별 매출
+#### 3) 요일별 매출
 ```
 credit_mon = credit[credit['days_of_week']==0]
 credit_tue = credit[credit['days_of_week']==1]
@@ -160,7 +160,7 @@ fig.show()
 <img src="https://user-images.githubusercontent.com/72811950/105201979-d27ab580-5b84-11eb-8dfe-ca9fd6b963d4.png" width="700" height="500"></img> 
 - 토요일의 매출이 가장 높고 다음으로 금요일이 높았다. 매출이 가장 적은 요일은 일요일이었다.  
   
-4) 요일별 시간대 매출과 한 건당 결제 금액
+#### 4) 요일별 시간대 매출과 한 건당 결제 금액
 ```
 monday_hourly_amount = credit_mon.groupby("hour")["amount"].sum().reset_index()
 tuesday_hourly_amount = credit_tue.groupby("hour")["amount"].sum().reset_index()
@@ -214,7 +214,7 @@ fig.show()
 - 일요일은 평일에 비해 일찍 매출이 떨어지기 시작한다.(19시에 매출 정점을 찍고 떨어지기 시작한다.)
 - 평일에는 12시와 20에 매출이 상승하다가 떨어지는 반면 토요일과 일요일은 13시와 19시에 매출이 상승했다 떨어진다.  
   
-5) 공휴일과 평일 시간대 매출 비교
+#### 5) 공휴일과 평일 시간대 매출 비교
 ```
 non_holyday = credit[credit['holyday']==0]
 holyday = credit[credit['holyday']==1]
@@ -233,8 +233,57 @@ fig.update_layout(title='시간대 평일 VS 휴일 평균 매출',
 fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105204185-3d2cf080-5b87-11eb-9ef4-5c02b1129877.png" width="700" height="500"></img>
-- 시간대 매출 확인 결과 공휴일보다 평일에 사람들의 소비가 높았다.
+- 시간대 매출 확인 결과 공휴일보다 평일에 사람들의 소비가 높았다.  
+  
+#### 6) 휴일 전날과 아닌날의 매출 비교
+```
+holyday = credit[credit['holyday']==1]
+holiday_list = holyday.date.unique()
+d = np.timedelta64(1, 'D')
+before_list = holiday_list - d
+before_holyday = credit[(credit["date"].isin(before_list))|(credit['days_of_week']==5)]
+non_before_holyday = credit[~(credit["date"].isin(before_list))&(credit['days_of_week']!=5)]
+b_holyday = before_holyday.groupby('hour')['amount'].sum().reset_index()
+non_b_holyday = non_before_holyday.groupby('hour')['amount'].sum().reset_index()
 
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=b_holyday["hour"], y=b_holyday["amount"],\
+                         name="다음날이 휴일인 날", marker_color="red"))
+fig.add_trace(go.Scatter(x=non_b_holyday["hour"], y=non_b_holyday["amount"],\
+                         name="다음날이 휴일이 아닌 날", marker_color="blue"))            
+fig.update_layout(title='공휴일 전날과 아닌 날의 매출 비교',
+                  xaxis_title='시간',
+                  yaxis_title='총 매출',
+                  font_size=12)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105205061-29ce5500-5b88-11eb-8399-549cf7fd24c4.png" width="700" height="500"></img>
+- 휴일 전날보다 평일에 사람들의 소비가 많이 이뤄진다.  
+  
+#### 7) 일일 구매 횟수와 매출
+```
+daily_count = credit.groupby("date").size().reset_index(name="daily_count")
+daily_amount = credit.groupby("date")["amount"].sum().reset_index(name="daily_amount")
+
+fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.02, row_heights = [0.5, 0.5])
+
+fig.add_trace(go.Scatter(x=daily_count["date"][::-1], y=daily_count["daily_count"][::-1],\
+                         name="구매 횟수", marker_color="red"), row=1, col=1)
+
+fig.add_trace(go.Scatter(x=daily_amount["date"][::-1], y=daily_amount["daily_amount"][::-1],\
+                         name="매출액", marker_color="blue"),row=2, col=1)
+
+fig.update_layout(height=300*2, width=260*3, title_text="일일 구매 횟수와 매출액", font_size=12)
+fig.update_xaxes(title_text="일", row=2, col=1)
+fig.update_yaxes(title_text="구매 횟수", row=1, col=1)
+fig.update_yaxes(title_text="총 매출액", row=2, col=1)
+
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105205381-8e89af80-5b88-11eb-9e26-78f4239dba5f.png" width="800" height="580"></img>
+- 일일 구매 횟수와 매출 두 그래프가 비슷한 형태를 보이고 있다. 
+- 구매횟수와 매출이 떨어지는 날을 확인해보니 휴일이었다. (2016-09-15, 2017-10-04 : 추석, 2017-01-28, 2018-02-16 : 설)
+- 추석 설 당일에는 휴무인 상점이 많아 거래가 준 것으로 보인다.
 
 ### 4) 할부 내역 분석
 
