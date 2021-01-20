@@ -40,7 +40,8 @@ font_name = font_manager.FontProperties(fname=f_path).get_name()
 rc('font', family=font_name)
 ```
 1) 데이터 확인
-- 데이터 정보
+- 데이터 정보  
+변수 8개 관측치는 약 330만개로 관측치에 비해 변수가 적은편
 ```
 store_id :각 파일에서의 상점 고유 번호
 date : 거래 일자
@@ -50,9 +51,8 @@ amount :매출액 (여기서 매출액은 KRW가 아님)
 installments : 할부개월수. 일시불은 빈 문자열
 days_of_week : 요일, 월요일이 0, 일요일은 6
 holiday : 0이면 공휴일 아님, 1이면 공휴일
-```
-- 데이터 형태
-변수 8개 관측치는 약 330만개로 관측치에 비해 변수가 적은편
+```  
+
 - 데이터 유니크 값 개수
 1775개의 상점에서 922522개의 신용카드가 조사된 것을 알 수 있다.
 <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="200" height="300"></img>
