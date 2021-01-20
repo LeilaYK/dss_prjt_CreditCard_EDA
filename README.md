@@ -3,8 +3,10 @@
 <p align="center"><img src="https://user-images.githubusercontent.com/72811950/105155279-bf002800-5b4d-11eb-8af9-b2f5bc72215f.jpg"></p>
 
 ## 1. 목적
-- 2년 동안(2016년 8월 ~ 2018년 07월)의 한국의 약 2000여 개 상점의 신용카드 거래내역을 이용하여 데이터 시각화 및 인사이트 발굴
-- 신용카드 거래내역 데이터는 DACON에서 가져온 것으로 https://dacon.io/competitions/official/42473/data/ 에서 확인하실 수 있습니다.
+- 2년 동안(2016년 8월 ~ 2018년 07월)의 한국의 약 2000여 개 상점의  
+  신용카드 거래내역을 이용하여 데이터 시각화 및 인사이트 발굴
+- 신용카드 거래내역 데이터는 DACON에서 가져온 것으로  
+  https://dacon.io/competitions/official/42473/data/ 에서 확인하실 수 있습니다.
 
 ## 2. 설치
 ### Requirements
