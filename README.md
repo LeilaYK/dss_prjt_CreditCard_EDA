@@ -39,9 +39,9 @@ f_path = "/Library/Fonts/Arial Unicode.ttf"
 font_name = font_manager.FontProperties(fname=f_path).get_name()
 rc('font', family=font_name)
 ```
-### 3.2 데이터 확인
+### 3.2 데이터 확인  
 1) 데이터 정보  
-  변수 8개 관측치는 3362796개로 관측치에 비해 변수가 적은편
+- 변수 8개 관측치는 3362796개로 관측치에 비해 변수가 적은편
 ```
 store_id :각 파일에서의 상점 고유 번호
 date : 거래 일자
@@ -53,11 +53,11 @@ days_of_week : 요일, 월요일이 0, 일요일은 6
 holiday : 0은 공휴일 아닌 날, 1은 공휴일
 ```  
 2) 데이터 유니크 값 개수  
-  1775개의 상점에서 922522개의 신용카드가 조사됨  
+- 1775개의 상점에서 922522개의 신용카드가 조사됨  
   
   <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="240" height="300"></img>  
 3) 결측치 확인  
-  installments 컬럼에 3345936개의 결측치 있음  
+- installments 컬럼에 3345936개의 결측치 있음  
 <img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="700" height="500"></img>
 
 ### 3.3 전처리  
