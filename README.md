@@ -71,7 +71,9 @@ holiday : 0은 공휴일 아닌 날, 1은 공휴일
 ### 3.4 시간에 따른 매출 분석  
 #### 1) 월별 총 매출과 결제횟수
 ```
+# 2년동안의 월별 총 매출
 monthly_sales = credit.groupby("year-month")["amount"].sum().reset_index(name="monthly_total_amount")
+# 2년동안의 월별 결제 횟수
 monthly_count = credit.groupby("year-month").size().reset_index(name="monthly_count") 
 
 colors = ["#316395"] * 24
@@ -105,7 +107,8 @@ fig.show()
   
 #### 2) 2017년 시즌별 매출(월별로 확인)
 ```
-credit_2017 = credit[credit["year"] ==2017]
+# 2017년도 데이터만 추출
+credit_2017 = credit[credit["year"]==2017]
 seasonal_sales = credit_2017.groupby("month")["amount"].sum().reset_index(name="seasonal_sales")
 
 colors = ["#316395"] * 12
@@ -123,10 +126,11 @@ fig.show()
 <img src="https://user-images.githubusercontent.com/72811950/105198719-49ae4a80-5b81-11eb-8210-68162ad201da.png" width="700" height="500"></img>  
 - 2년간의 정보가 있지만 2016년 하반기와 2018년 상반기 데이터가 합쳐진 것으로 주변상황(물가, 소비자 심리 등)을 고려했을 때  
   매출 비교가 제대로 이뤄지지 않을 것으로 판단 2017년 한 해의 데이터로만 분석 
-- 겨울에는  줄어듦. 하지만 12월은 연말이라 사람들의 소비가 늘어난 것으로 보임.  
+- 겨울에는 매출이 줄어듦. 하지만 12월은 연말이라 사람들의 소비가 늘어난 것으로 보임.  
   
 #### 3) 요일별 매출
 ```
+# 요일별로 묶기
 credit_mon = credit[credit['days_of_week']==0]
 credit_tue = credit[credit['days_of_week']==1]
 credit_wed = credit[credit['days_of_week']==2]
@@ -134,7 +138,7 @@ credit_thu = credit[credit['days_of_week']==3]
 credit_fri = credit[credit['days_of_week']==4]
 credit_sat = credit[credit['days_of_week']==5]
 credit_sun = credit[credit['days_of_week']==6]
-
+# 요일별 매출
 monday_amount = credit_mon["amount"].sum()
 tuesday_amount = credit_tue["amount"].sum()
 wednesday_amount = credit_wed["amount"].sum()
@@ -142,7 +146,7 @@ thursday_amount = credit_thu["amount"].sum()
 firday_amount = credit_fri["amount"].sum()
 saturday_amount = credit_sat["amount"].sum()
 sunday_amount = credit_sun["amount"].sum()
-
+# 요일별 매출 데이터프레임
 week_amount_data = {"요일":["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"],\
         "총매출":[monday_amount, tuesday_amount, wednesday_amount, thursday_amount, firday_amount, saturday_amount, sunday_amount]}
 weekly_amount_df = pd.DataFrame(week_amount_data)
@@ -162,6 +166,7 @@ fig.show()
   
 #### 4) 요일별 시간대 매출과 한 건당 결제 금액
 ```
+# 요일별 시간대 총 매출
 monday_hourly_amount = credit_mon.groupby("hour")["amount"].sum().reset_index()
 tuesday_hourly_amount = credit_tue.groupby("hour")["amount"].sum().reset_index()
 wednsday_hourly_amount = credit_wed.groupby("hour")["amount"].sum().reset_index()
@@ -169,7 +174,7 @@ thursday_hourly_amount = credit_thu.groupby("hour")["amount"].sum().reset_index(
 friday_hourly_amount = credit_fri.groupby("hour")["amount"].sum().reset_index()
 saturday_hourly_amount = credit_sat.groupby("hour")["amount"].sum().reset_index()
 sunday_hourly_amount = credit_sun.groupby("hour")["amount"].sum().reset_index()
-
+# 요일별 시간대 한 건당 매출
 weekly_mean_slaes1 = credit_mon.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes1")
 weekly_mean_slaes2 = credit_tue.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes2")
 weekly_mean_slaes3 = credit_wed.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes3")
@@ -216,6 +221,7 @@ fig.show()
   
 #### 5) 공휴일과 평일 시간대 매출 비교
 ```
+# 공휴일과 평일로 데이터 나누기
 non_holyday = credit[credit['holyday']==0]
 holyday = credit[credit['holyday']==1]
 non_holyday_amount_mean = non_holyday.groupby('hour')['amount'].sum().reset_index()
@@ -232,7 +238,7 @@ fig.update_layout(title='시간대 평일 VS 휴일 평균 매출',
                   font_size=12)
 fig.show()
 ```  
-<img src="https://user-images.githubusercontent.com/72811950/105204185-3d2cf080-5b87-11eb-9ef4-5c02b1129877.png" width="750" height="520"></img>
+<img src="https://user-images.githubusercontent.com/72811950/105204185-3d2cf080-5b87-11eb-9ef4-5c02b1129877.png" width="800" height="500"></img>
 - 시간대 매출 확인 결과 공휴일보다 평일에 사람들의 소비가 높았다.  
   
 #### 6) 휴일 전날과 아닌날의 매출 비교
@@ -262,7 +268,9 @@ fig.show()
   
 #### 7) 일일 구매 횟수와 매출
 ```
+# 일별 구매횟수
 daily_count = credit.groupby("date").size().reset_index(name="daily_count")
+# 일별 매출합
 daily_amount = credit.groupby("date")["amount"].sum().reset_index(name="daily_amount")
 
 fig = make_subplots(rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.02, row_heights = [0.5, 0.5])
@@ -298,7 +306,25 @@ fig.update_yaxes(title_text="빈도수")
 fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105207154-86327400-5b8a-11eb-9bfc-bf998ec2ff3e.png" width="700" height="500"></img>
-- 3개월 할부가 가장 많았고 그 다음으로 2개월, 5개월 할부가 많았다.
+- 3개월 할부가 가장 많았고 그 다음으로 2개월, 5개월 할부가 많았다.  
+  
+#### 2) 요일별 할부 횟수
+```
+installments_count_by_day = installments_df.groupby("days_of_week").size().reset_index(name="빈도수")
+installments_count_by_day["days_of_week"] = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=installments_count_by_day["days_of_week"], y=installments_count_by_day["빈도수"],\
+                  marker_color="red"))
+fig.update_layout(title='요일별 할부결제 총 횟수',
+                  xaxis_title='요일',
+                  yaxis_title='결제 횟수',
+                  font_size=12)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105209364-170a4f00-5b8d-11eb-93c8-251b14a733ad.png" width="700" height="500"></img>  
+- 토요일 다음으로 금요일 화요일 순으로 할부 결제건이 많았고 일요일이 할부 결제가 가장 적었다.
+
 
 
 ### 3.5 거래 취소내역 분석
