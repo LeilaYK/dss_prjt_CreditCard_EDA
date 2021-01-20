@@ -4,6 +4,7 @@
 
 ## 1. 목적
 - 2년 동안(2016년 8월 ~ 2018년 07월) 한국의 약 2000여개 상점의 신용카드 거래내역을 이용하여 데이터 시각화 및 인사이트 발굴
+- 신용카드 거래내역 데이터는 DACON에서 가져온 것으로 https://dacon.io/competitions/official/42473/data/ 에서 확인하실 수 있습니다.
 
 ## 2. 설치
 Requirements
@@ -19,7 +20,7 @@ pip install seaborn
 pip install plotly
 pip install tqdm
 ```
-## 3. 프로젝트 진행 순서
+## 3. EDA 진행 순서
 
 1. 데이터 확인
 2. 전처리
