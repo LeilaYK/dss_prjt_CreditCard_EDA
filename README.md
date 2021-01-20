@@ -68,7 +68,40 @@ holiday : 0은 공휴일 아닌 날, 1은 공휴일
   - amount컬럼에서 전체 상점 일일 총 매출의 1/4을 차지할 정도로 큰 이상치가 있음.  
     이상치라고 여겨지는 대부분의 결제건이 높은 금액의 물건을 판매하는 한 두 상점의 매출이어서 그 상점들의 매출을 다 제거하는 것이 바람직하지 않다고 생각하여 격차가 매우 큰 이상치 한 개만 제거하기로 함.  
 
-### 3) 시간에 따른 매출 분석
+### 3) 시간에 따른 매출 분석  
+- 월별 총 매출과 결제횟수
+```
+monthly_sales = credit.groupby("year-month")["amount"].sum().reset_index(name="monthly_total_amount")
+monthly_count = credit.groupby("year-month").size().reset_index(name="monthly_count") 
+
+colors = ["#316395"] * 24
+colors[4] = 'crimson'
+colors[16] = 'crimson'
+
+fig = make_subplots(rows=2, cols=1, shared_xaxes=True, row_heights = [0.4, 0.6], vertical_spacing=0.02)
+
+fig.append_trace(go.Scatter(
+    x=monthly_count["year-month"],
+    y=monthly_count["monthly_count"],
+    marker_color="red",
+    name="결제 횟수"
+), row=1, col=1)
+
+fig.append_trace(go.Bar(
+    x=monthly_sales["year-month"],
+    y=monthly_sales["monthly_total_amount"],
+    marker_color=colors,
+    name="총 매출액"
+), row=2, col=1)
+
+fig.update_layout(height=300*2, width=260*3, title_text="월별 총 매출과 결제 횟수", font_size=12)
+fig.update_xaxes(title_text="월", row=2, col=1)
+fig.update_yaxes(title_text="결제 횟수", row=1, col=1)
+fig.update_yaxes(title_text="총 매출액", row=2, col=1)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105197614-23d47600-5b80-11eb-87ff-c014f6edec9f.png" width="700" height="500"></img>
+
 
 
 ### 4) 할부 내역 분석
