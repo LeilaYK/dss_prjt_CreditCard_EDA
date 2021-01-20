@@ -40,7 +40,8 @@ font_name = font_manager.FontProperties(fname=f_path).get_name()
 rc('font', family=font_name)
 ```
 2) 전처리
-
+- installments 컬럼에 결측치가 3345936개 있는 것 확인
+![newplot](https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png)
 
 3) 시간에 따른 매출 분석
 
