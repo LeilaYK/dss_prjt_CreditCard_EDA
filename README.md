@@ -21,12 +21,29 @@ pip install plotly
 pip install tqdm
 ```
 ## 3. EDA 진행 순서
-
 1. 데이터 확인
 2. 전처리
 3. 시간에 따른 매출 분석
 4. 할부내역 분석
 5. 거래취소내역 분석
 
-## 4. EDA
-1) 
+## 4. EDA(Exploratory data analysis)
+0) 환경 설정
+```
+from matplotlib import font_manager, rc
+from plotly.subplots import make_subplots
+from tqdm import tqdm
+import matplotlib.pyplot as plt 
+import seaborn as sns 
+import plotly.graph_objs as go
+import plotly.express as px
+import numpy as np
+import pandas as pd
+%matplotlib inline
+
+plt.rcParams['axes.unicode_minus'] = False
+f_path = "/Library/Fonts/Arial Unicode.ttf"
+font_name = font_manager.FontProperties(fname=f_path).get_name()
+rc('font', family=font_name)
+```
+1) 데이터 확인
