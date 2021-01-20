@@ -349,8 +349,10 @@ fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105210595-951b2580-5b8e-11eb-8166-bae63cc0ca0c.png" width="700" height="500"></img>
 - 일시불일 때(파란색)와 할부를 했을 때(빨간색) 두 경우를 나누어 매출액을 시간 별 평균 비교.
-- 할부를 했을 때의 매출액이 일시불일 때의 매출액보다 어느 시간대에서든 크게 상회하는 것을 볼 수 있음. 이를 통해 큰 금액을 결제할 때 할부를 선택한다는 것을 확인
-- 일시불일 때는 어떤 시간대이든 매출액이 낮게 유지되는 반면 할부를 했을 때는 시간별 매출액의 변동이 큼. 일시불로 결제되는 금액은 상대적으로 한정적이고 작은 금액임을 확인.
+- 할부를 했을 때의 매출액이 일시불일 때의 매출액보다 어느 시간대에서든 크게 상회하는 것을 볼 수 있음.  
+  이를 통해 큰 금액을 결제할 때 할부를 선택한다는 것을 확인
+- 일시불일 때는 어떤 시간대이든 매출액이 낮게 유지되는 반면 할부를 했을 때는 시간별 매출액의 변동이 큼.  
+  일시불로 결제되는 금액은 상대적으로 한정적이고 작은 금액임을 확인.
 
 ### 3.5 거래 취소내역 분석  
 - 결제 취소건을 분석하기 위해 다시 원래 데이터를 읽음
@@ -372,8 +374,8 @@ fig.update_layout(title='시간대별 거래취소횟수',
 fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105211247-605b9e00-5b8f-11eb-84b3-98d8c18b7a59.png" width="700" height="500"></img>
-- 12시, 13시, 19시가 다른 시간대에 비해서 높으며, 주로 낮에서 저녁 사이의 시간대에 거래 취소가 많은 것을 확인할 수 있음. 그중에서도 주로 식사시간에 거래취소를 많이 하는 편.  
-  이 시간대에 거래건수도 많기 때문에 거래와 취소가 빈번하게 일어나는 시간대로 볼 수 있음.  
+- 12시, 13시, 19시가 다른 시간대에 비해서 높으며, 주로 낮에서 저녁 사이의 시간대에 거래 취소가 많은 것을 확인할 수 있음.  
+  그중에서도 주로 식사시간에 거래취소를 많이 하는 편. 이 시간대에 거래건수도 많기 때문에 거래와 취소가 빈번하게 일어나는 시간대로 볼 수 있음.  
   
 #### 2) 시간대별 거래 취소율
 ```
@@ -391,8 +393,57 @@ fig.update_layout(title='시간대별 거래취소율',
 fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105212719-29868780-5b91-11eb-87b7-2315e2423533.png" width="700" height="500"></img>
-- 거래 취소율을 보면 아침 시간대에서 비율이 높은 것을 확인할 수 있음. 하지만 취소율의 최고와 최저가 0.8%밖에 차이가 나지 않아 취소율은 어느시간대나 비슷하다고 할 수 있음 
-  다만, 아침에 취소율이 높은 이유는 거래 횟수가 얼마 되지 않는데 1건이라도 취소가 늘어나면 비율이 급격하게 증가하기 때문이 아닌가 추측
+- 거래 취소율을 보면 아침 시간대에서 비율이 높은 것을 확인할 수 있음.  
+  하지만 취소율의 최고와 최저가 0.8%밖에 차이가 나지 않아 취소율은 어느시간대나 비슷하다고 할 수 있음  
+  다만, 아침에 취소율이 높은 이유는 거래 횟수가 얼마 되지 않는데 1건이라도 취소가 늘어나면 비율이 급격하게 증가하기 때문이 아닌가 추측  
+    
+#### 3) 거래취소가 많이 일어나는 상점의 거래취소 횟수
+```
+store_cancel = cancel_df.groupby('store_id').size().reset_index(name="cancel_size")
+store_cancel = store_cancel.sort_values(by='cancel_size',ascending=False).head(10)
+store_cancel = store_cancel.reset_index(drop=True)
+store_cancel["store_id"] = ["161번", "1024번", "0번", "221번", "942번", "958번", "428번", "1073번", "356번", "528번"]
+
+fig = go.Figure()
+fig.add_trace(go.Bar(x=store_cancel["store_id"], y=store_cancel["cancel_size"], marker_color="#316395"))
+fig.update_layout(title='거래 취소 횟수 상위 10개 상점',
+                  xaxis_title='상점 ID',
+                  yaxis_title='거래 취소 횟수',
+                  font_size=12)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105213773-76b72900-5b92-11eb-8e97-de8ea915ba8b.png" width="700" height="500"></img>
+- 161번, 1024번 상점은 다른 상점들에 비해서 거래 취소 건수가 많음.  
+  거래 취소가 많다는 것은 거래 수는 많아 보이지만 실제 매출액으로 계산될 거래 수는 적어지는 것이기 때문에  
+  거래 취소가 많은 상점은 더 자세히 살펴볼 필요가 있음.  
+    
+#### 4) 거래취소가 많이 일어나는 상점의 거래취소율
+```
+store_cancel = cancel_df.groupby('store_id').size().reset_index(name='cancel_size')
+store_cancel = pd.merge(store_cancel, credit.groupby('store_id').size().reset_index())
+store_cancel.columns = ['store_id','cancel_size','total_size']
+store_cancel['cancel_ratio'] = store_cancel.cancel_size/store_cancel.total_size *100
+store_cancel = store_cancel.sort_values(by='cancel_ratio',ascending=False).reset_index(drop=True)
+store_cancel_ratio = store_cancel[(store_cancel["store_id"] == 161)|(store_cancel["store_id"] == 1024)|\
+                                 (store_cancel["store_id"] == 0)|(store_cancel["store_id"] == 221)|\
+                                 (store_cancel["store_id"] == 942)|(store_cancel["store_id"] == 958)|\
+                                 (store_cancel["store_id"] == 428)|(store_cancel["store_id"] == 1073)|\
+                                 (store_cancel["store_id"] == 356)|(store_cancel["store_id"] == 528)]
+store_cancel_ratio["store_id"] = ["161번", "1024번", "0번", "221번", "942번", "958번", "428번", "1073번", "356번", "528번"]
+
+fig = go.Figure()
+fig.add_trace(go.Bar(x=store_cancel_ratio["store_id"], y=store_cancel_ratio["cancel_ratio"],\
+                     marker_color="#316395"))
+fig.update_layout(title='거래 취소율 상위 10개 상점',
+                  xaxis_title='상점 ID',
+                  yaxis_title='거래 취소율(%)',
+                  font_size=12)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105214233-14aaf380-5b93-11eb-9c44-9831529995be.png" width="700" height="500"></img>
+- 거래취소가 많았던 161번 상점과 1024번 상점의 취소비율 또한 높은 것을 알 수 있었음.
+- 161상점은 취소비율이 17.9%나 되는 것을 확인
+
 
 
 
