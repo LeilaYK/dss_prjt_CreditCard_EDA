@@ -19,4 +19,13 @@ pip install seaborn
 pip install plotly
 pip install tqdm
 ```
-
+## 3. 프로젝트 진행 순서
+```
+1. 데이터 확인
+2. 전처리
+3. 시간에 따른 매출 분석
+4. 할부내역 분석
+5. 거래취소내역 분석
+```
+## 4. EDA
+1) 
