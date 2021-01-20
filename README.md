@@ -7,11 +7,11 @@
 - 신용카드 거래내역 데이터는 DACON에서 가져온 것으로 https://dacon.io/competitions/official/42473/data/ 에서 확인하실 수 있습니다.
 
 ## 2. 설치
-Requirements
+### Requirements
 ```
 * Python 3.6+
 ```
-Installation
+### Installation
 ```
 pip install numpy
 pip install pandas
@@ -21,7 +21,7 @@ pip install plotly
 pip install tqdm
 ```
 ## 3. EDA(Exploratory Data Analysis)
-0) 패키지 불러오기
+### 0) 패키지 불러오기
 ```
 from matplotlib import font_manager, rc
 from plotly.subplots import make_subplots
@@ -39,7 +39,7 @@ f_path = "/Library/Fonts/Arial Unicode.ttf"
 font_name = font_manager.FontProperties(fname=f_path).get_name()
 rc('font', family=font_name)
 ```
-1) 데이터 확인
+### 1) 데이터 확인
 - 데이터 정보  
 변수 8개 관측치는 약 330만개로 관측치에 비해 변수가 적은편
 ```
@@ -58,17 +58,17 @@ holiday : 0이면 공휴일 아님, 1이면 공휴일
 <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="240" height="300"></img>  
 
 
-2) 전처리
+### 2) 전처리
 - installments 컬럼에 3345936개의 결측치 있는 것을 확인
 ![newplot](https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png)
 
-3) 시간에 따른 매출 분석
+### 3) 시간에 따른 매출 분석
 
 
-4) 할부 내역 분석
+### 4) 할부 내역 분석
 
 
-5) 거래 취소내역 분석
+### 5) 거래 취소내역 분석
 
 
 
