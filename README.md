@@ -123,7 +123,7 @@ fig.show()
 <img src="https://user-images.githubusercontent.com/72811950/105198719-49ae4a80-5b81-11eb-8210-68162ad201da.png" width="700" height="500"></img>  
 - 2년간의 정보가 있지만 2016년 하반기와 2018년 상반기 데이터가 합쳐진 것으로 주변상황(물가, 소비자 심리 등)을 고려했을 때  
   매출 비교가 제대로 이뤄지지 않을 것으로 판단 2017년 한 해의 데이터로만 분석 
-- 겨울에는 신용카드 사용이 줄어듦. 하지만 12월은 연말이라 사람들의 소비가 늘어난 것으로 보임.  
+- 겨울에는  줄어듦. 하지만 12월은 연말이라 사람들의 소비가 늘어난 것으로 보임.  
   
 #### 3) 요일별 매출
 ```
@@ -232,7 +232,7 @@ fig.update_layout(title='시간대 평일 VS 휴일 평균 매출',
                   font_size=12)
 fig.show()
 ```  
-<img src="https://user-images.githubusercontent.com/72811950/105204185-3d2cf080-5b87-11eb-9ef4-5c02b1129877.png" width="700" height="500"></img>
+<img src="https://user-images.githubusercontent.com/72811950/105204185-3d2cf080-5b87-11eb-9ef4-5c02b1129877.png" width="750" height="520"></img>
 - 시간대 매출 확인 결과 공휴일보다 평일에 사람들의 소비가 높았다.  
   
 #### 6) 휴일 전날과 아닌날의 매출 비교
@@ -283,12 +283,25 @@ fig.show()
 <img src="https://user-images.githubusercontent.com/72811950/105205381-8e89af80-5b88-11eb-9e26-78f4239dba5f.png" width="800" height="580"></img>
 - 일일 구매 횟수와 매출 두 그래프가 비슷한 형태를 보이고 있다. 
 - 구매횟수와 매출이 떨어지는 날을 확인해보니 휴일이었다. (2016-09-15, 2017-10-04 : 추석, 2017-01-28, 2018-02-16 : 설)
-- 추석 설 당일에는 휴무인 상점이 많아 거래가 준 것으로 보인다.
+- 추석 설 당일에는 휴무인 상점이 많아 거래가 준 것으로 보인다.  
 
-### 4) 할부 내역 분석
+### 3.4 할부 내역 분석  
+#### 1) 할부별 빈도수
+```
+# 할부 데이터만 추출
+installments_df = credit[(credit["installments"] > 1)]
+
+fig = px.histogram(installments_df, x="installments", color_discrete_sequence=['orange'])
+fig.update_layout(title_text="사람들은 몇 개월 할부를 가장 많이 할까?", font_size=12)
+fig.update_xaxes(title_text="할부 개월수")
+fig.update_yaxes(title_text="빈도수")
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105207154-86327400-5b8a-11eb-9bfc-bf998ec2ff3e.png" width="700" height="500"></img>
+- 3개월 할부가 가장 많았고 그 다음으로 2개월, 5개월 할부가 많았다.
 
 
-### 5) 거래 취소내역 분석
+### 3.5 거래 취소내역 분석
 
 
 
