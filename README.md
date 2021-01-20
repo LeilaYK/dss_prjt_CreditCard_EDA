@@ -40,7 +40,7 @@ font_name = font_manager.FontProperties(fname=f_path).get_name()
 rc('font', family=font_name)
 ```
 ### 3.2 데이터 확인  
-1) 데이터 정보  
+#### 1) 데이터 정보  
 - 변수 8개 관측치는 3362796개로 관측치에 비해 변수가 적은편
 ```
 store_id :각 파일에서의 상점 고유 번호
@@ -52,7 +52,7 @@ installments : 할부 개월 수. 일시불은 빈 문자열
 days_of_week : 요일, 월요일이 0, 일요일은 6
 holiday : 0은 공휴일 아닌 날, 1은 공휴일
 ```  
-2) 데이터 유니크 값 개수  
+#### 2) 데이터 유니크 값 개수  
 - 1775개의 상점에서 922522개의 신용카드가 조사됨  
   
   <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="240" height="300"></img>  
