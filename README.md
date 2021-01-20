@@ -53,13 +53,13 @@ days_of_week : 요일, 월요일이 0, 일요일은 6
 holiday : 0이면 공휴일 아님, 1이면 공휴일
 ```  
 
-- 데이터 유니크 값 개수
-1775개의 상점에서 922522개의 신용카드가 조사된 것을 알 수 있다.
-<img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="200" height="300"></img>
+- 데이터 유니크 값 개수  
+1775개의 상점에서 922522개의 신용카드가 조사됨을 확인  
+<img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="200" height="300"></img>  
 ![newplot (1)](https://user-images.githubusercontent.com/72811950/105183157-2f6c7080-5b71-11eb-85a5-e4011cf31d50.png)
 
 2) 전처리
-- installments 컬럼에 결측치가 3345936개 있는 것 확인
+- installments 컬럼에 3345936개의 결측치 있는 것을 확인
 ![newplot](https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png)
 
 3) 시간에 따른 매출 분석
