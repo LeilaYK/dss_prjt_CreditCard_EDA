@@ -41,7 +41,7 @@ rc('font', family=font_name)
 ```
 ### 1) 데이터 확인
 - 데이터 정보  
-변수 8개 관측치는 3362796개로 관측치에 비해 변수가 적은편
+  변수 8개 관측치는 3362796개로 관측치에 비해 변수가 적은편
 ```
 store_id :각 파일에서의 상점 고유 번호
 date : 거래 일자
@@ -58,19 +58,15 @@ holiday : 0은 공휴일 아닌 날, 1은 공휴일
   <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="240" height="300"></img>  
 - 결측치 확인  
   installments 컬럼에 3345936개의 결측치 있음  
-<img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="700" height="500"></img> 
+<img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="700" height="500"></img>
 
 ### 2) 전처리  
 - 결측치 처리  
   installments에서 결측치는 일시불을 의미하므로 1로 채움  
 - 이상치 확인 및 처리  
-  - amount는 환불 때문에 -값이 생긴 것을 볼 수 있다. 분석을 위해 환불 건은 제거.  
+  - amount는 환불 때문에 -값이 존재. 분석을 위해 환불 건은 제거.  
   - amount컬럼에서 전체 상점 일일 총 매출의 1/4을 차지할 정도로 큰 이상치가 있음.  
     이상치라고 여겨지는 대부분의 결제건이 높은 금액의 물건을 판매하는 한 두 상점의 매출이어서 그 상점들의 매출을 다 제거하는 것이 바람직하지 않다고 생각하여 격차가 매우 큰 이상치 한 개만 제거하기로 함.  
-
-
-
-
 
 ### 3) 시간에 따른 매출 분석
 
