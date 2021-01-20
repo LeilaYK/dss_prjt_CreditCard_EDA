@@ -61,7 +61,7 @@ holiday : 0은 공휴일 아닌 날, 1은 공휴일
 - 결측치 확인  
   installments 컬럼에 3345936개의 결측치 있음  
   
-<img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="700" height="450"></img> 
+<img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="750" height="450"></img> 
   
 - 이상치 확인  
   전체 상점 일일 총 매출의 1/4을 차지할 정도로 큰 이상치가 있음  
