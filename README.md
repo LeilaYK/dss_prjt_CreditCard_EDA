@@ -239,12 +239,14 @@ fig.update_layout(title='시간대 평일 VS 휴일 평균 매출',
 fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105204185-3d2cf080-5b87-11eb-9ef4-5c02b1129877.png" width="800" height="500"></img>
-- 시간대 매출 확인 결과 공휴일보다 평일에 사람들의 소비가 높았다.  
+- 시간대 매출 확인 결과 공휴일보다 평일에 사람들의 소비가 많았다.  
   
 #### 6) 휴일 전날과 아닌날의 매출 비교
 ```
+# 공휴일 데이터만 추출
 holyday = credit[credit['holyday']==1]
 holiday_list = holyday.date.unique()
+# 공휴일에서 하루를 빼서 공휴일 전날의 날짜를 리스트에 
 d = np.timedelta64(1, 'D')
 before_list = holiday_list - d
 before_holyday = credit[(credit["date"].isin(before_list))|(credit['days_of_week']==5)]
@@ -308,7 +310,7 @@ fig.show()
 <img src="https://user-images.githubusercontent.com/72811950/105207154-86327400-5b8a-11eb-9bfc-bf998ec2ff3e.png" width="700" height="500"></img>
 - 3개월 할부가 가장 많았고 그 다음으로 2개월, 5개월 할부가 많았다.  
   
-#### 2) 요일별 할부 횟수
+#### 2) 요일별 할부 결제 횟수
 ```
 installments_count_by_day = installments_df.groupby("days_of_week").size().reset_index(name="빈도수")
 installments_count_by_day["days_of_week"] = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]
@@ -323,11 +325,75 @@ fig.update_layout(title='요일별 할부결제 총 횟수',
 fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105209364-170a4f00-5b8d-11eb-93c8-251b14a733ad.png" width="700" height="500"></img>  
-- 토요일 다음으로 금요일 화요일 순으로 할부 결제건이 많았고 일요일이 할부 결제가 가장 적었다.
+- 토요일 다음으로 금요일 화요일 순으로 할부 결제건이 많았고 일요일이 할부 결제가 가장 적었다.  
+  
+#### 3) 일시불과 할부에 따른 시간대 평균 결제금액 비교
+```
+# 일시불과 할부 데이터 분리
+non_installments = credit[credit['installments']==1]
+installments = credit[credit['installments']!=1]
 
+hourly_non_installments_mean = non_installments.groupby('hour')['amount'].mean().reset_index(name="non_installments_amount_mean")
+hourly_installments_mean = installments.groupby('hour')['amount'].mean().reset_index(name="installments_amount_mean")
 
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=hourly_non_installments_mean["hour"], y=hourly_non_installments_mean["non_installments_amount_mean"],\
+                         name="일시불", marker_color="blue"))
+fig.add_trace(go.Scatter(x=hourly_installments_mean["hour"], y=hourly_installments_mean["installments_amount_mean"],\
+                         name="할부", marker_color="red"))            
+fig.update_layout(title='시간대별 할부 VS 일시불 평균 결제금액',
+                  xaxis_title='시간',
+                  yaxis_title='평균 금액',
+                  font_size=12)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105210595-951b2580-5b8e-11eb-8166-bae63cc0ca0c.png" width="700" height="500"></img>
+- 일시불일 때(파란색)와 할부를 했을 때(빨간색) 두 경우를 나누어 매출액을 시간 별 평균 비교.
+- 할부를 했을 때의 매출액이 일시불일 때의 매출액보다 어느 시간대에서든 크게 상회하는 것을 볼 수 있음. 이를 통해 큰 금액을 결제할 때 할부를 선택한다는 것을 확인
+- 일시불일 때는 어떤 시간대이든 매출액이 낮게 유지되는 반면 할부를 했을 때는 시간별 매출액의 변동이 큼. 일시불로 결제되는 금액은 상대적으로 한정적이고 작은 금액임을 확인.
 
-### 3.5 거래 취소내역 분석
+### 3.5 거래 취소내역 분석  
+- 결제 취소건을 분석하기 위해 다시 원래 데이터를 읽음
+- 거래 취소내역은 총 33832건
+  
+#### 1) 시간대별 거래 취소 횟수
+```
+# 거래 취소한 내역만 추출
+cancel_df = credit[credit['amount']<0]
+cancel_df_hour = cancel_df.groupby('hour').size().reset_index(name='hour_size')
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=cancel_df_hour["hour"], y=cancel_df_hour["hour_size"],\
+                  marker_color="red"))
+fig.update_layout(title='시간대별 거래취소횟수',
+                  xaxis_title='시간',
+                  yaxis_title='거래 취소 횟수',
+                  font_size=12)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105211247-605b9e00-5b8f-11eb-84b3-98d8c18b7a59.png" width="700" height="500"></img>
+- 12시, 13시, 19시가 다른 시간대에 비해서 높으며, 주로 낮에서 저녁 사이의 시간대에 거래 취소가 많은 것을 확인할 수 있음. 그중에서도 주로 식사시간에 거래취소를 많이 하는 편.  
+  이 시간대에 거래건수도 많기 때문에 거래와 취소가 빈번하게 일어나는 시간대로 볼 수 있음.  
+  
+#### 2) 시간대별 거래 취소율
+```
+cancel_ratio = pd.merge(cancel_df_hour, credit.groupby('hour').size().reset_index())
+cancel_ratio.columns = ['hour','cancel_size','total_size']
+cancel_ratio['cancel_ratio'] = cancel_ratio.cancel_size/cancel_ratio.total_size * 100
+
+fig = go.Figure()
+fig.add_trace(go.Scatter(x=cancel_ratio["hour"], y=cancel_ratio["cancel_ratio"],\
+                  marker_color="red"))
+fig.update_layout(title='시간대별 거래취소율',
+                  xaxis_title='시간',
+                  yaxis_title='거래 취소율(%)',
+                  font_size=12)
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105212719-29868780-5b91-11eb-87b7-2315e2423533.png" width="700" height="500"></img>
+- 거래 취소율을 보면 아침 시간대에서 비율이 높은 것을 확인할 수 있음. 하지만 취소율의 최고와 최저가 0.8%밖에 차이가 나지 않아 취소율은 어느시간대나 비슷하다고 할 수 있음 
+  다만, 아침에 취소율이 높은 이유는 거래 횟수가 얼마 되지 않는데 1건이라도 취소가 늘어나면 비율이 급격하게 증가하기 때문이 아닌가 추측
+
 
 
 
