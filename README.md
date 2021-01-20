@@ -56,7 +56,9 @@ holiday : 0이면 공휴일 아님, 1이면 공휴일
 - 데이터 유니크 값 개수  
 1775개의 상점에서 922522개의 신용카드가 조사됨을 확인  
 <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="240" height="300"></img>  
-- installments 컬럼에 3345936개의 결측치가 있는 것을 확인
+  
+- 결측치 확인  
+installments 컬럼에 3345936개의 결측치가 있는 것을 확인
 ![newplot](https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png)
 
 ### 2) 전처리
