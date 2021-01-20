@@ -158,8 +158,61 @@ fig.update_layout(title='요일별 매출',
 fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105201979-d27ab580-5b84-11eb-8dfe-ca9fd6b963d4.png" width="700" height="500"></img> 
-- 토요일의 매출이 가장 높고 다음으로 금요일이 높았다. 매출이 가장 적은 요일은 일요일이었다.
+- 토요일의 매출이 가장 높고 다음으로 금요일이 높았다. 매출이 가장 적은 요일은 일요일이었다.  
+  
+4) 요일별 시간대 매출과 한 건당 결제 금액
+```
+monday_hourly_amount = credit_mon.groupby("hour")["amount"].sum().reset_index()
+tuesday_hourly_amount = credit_tue.groupby("hour")["amount"].sum().reset_index()
+wednsday_hourly_amount = credit_wed.groupby("hour")["amount"].sum().reset_index()
+thursday_hourly_amount = credit_thu.groupby("hour")["amount"].sum().reset_index()
+friday_hourly_amount = credit_fri.groupby("hour")["amount"].sum().reset_index()
+saturday_hourly_amount = credit_sat.groupby("hour")["amount"].sum().reset_index()
+sunday_hourly_amount = credit_sun.groupby("hour")["amount"].sum().reset_index()
 
+weekly_mean_slaes1 = credit_mon.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes1")
+weekly_mean_slaes2 = credit_tue.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes2")
+weekly_mean_slaes3 = credit_wed.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes3")
+weekly_mean_slaes4 = credit_thu.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes4")
+weekly_mean_slaes5 = credit_fri.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes5")
+weekly_mean_slaes6 = credit_sat.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes6")
+weekly_mean_slaes7 = credit_sun.groupby('hour')['amount'].mean().reset_index(name="weekly_mean_slaes7")
+
+fig = make_subplots(
+    rows=2, cols=1, shared_xaxes=True, vertical_spacing=0.02,
+    row_heights = [0.5, 0.5],
+)
+
+fig.add_trace(go.Scatter(x=monday_hourly_amount["hour"][::-1], y=monday_hourly_amount["amount"][::-1], name="월요일", marker_color="black"), row=1, col=1)
+fig.add_trace(go.Scatter(x=tuesday_hourly_amount["hour"][::-1], y=tuesday_hourly_amount["amount"][::-1], name="화요일", marker_color="yellow"), row=1, col=1)
+fig.add_trace(go.Scatter(x=wednsday_hourly_amount["hour"][::-1], y=wednsday_hourly_amount["amount"][::-1], name="수요일", marker_color="green"), row=1, col=1)
+fig.add_trace(go.Scatter(x=thursday_hourly_amount["hour"][::-1], y=thursday_hourly_amount["amount"][::-1], name="목요일", marker_color="blue"), row=1, col=1)
+fig.add_trace(go.Scatter(x=friday_hourly_amount["hour"][::-1], y=friday_hourly_amount["amount"][::-1], name="금요일", marker_color="purple"), row=1, col=1)
+fig.add_trace(go.Scatter(x=saturday_hourly_amount["hour"][::-1], y=saturday_hourly_amount["amount"][::-1], name="토요일", marker_color="orange"), row=1, col=1)
+fig.add_trace(go.Scatter(x=sunday_hourly_amount["hour"][::-1], y=sunday_hourly_amount["amount"][::-1], name="일요일", marker_color="red"), row=1, col=1)
+
+fig.add_trace(go.Scatter(x=weekly_mean_slaes1["hour"][::-1], y=weekly_mean_slaes1["weekly_mean_slaes1"][::-1], showlegend=False, marker_color="black"),row=2, col=1)
+fig.add_trace(go.Scatter(x=weekly_mean_slaes2["hour"][::-1], y=weekly_mean_slaes2["weekly_mean_slaes2"][::-1], showlegend=False, marker_color="yellow"),row=2, col=1)
+fig.add_trace(go.Scatter(x=weekly_mean_slaes3["hour"][::-1], y=weekly_mean_slaes3["weekly_mean_slaes3"][::-1], showlegend=False, marker_color="green"),row=2, col=1)
+fig.add_trace(go.Scatter(x=weekly_mean_slaes4["hour"][::-1], y=weekly_mean_slaes4["weekly_mean_slaes4"][::-1], showlegend=False, marker_color="blue"),row=2, col=1)
+fig.add_trace(go.Scatter(x=weekly_mean_slaes5["hour"][::-1], y=weekly_mean_slaes5["weekly_mean_slaes5"][::-1], showlegend=False, marker_color="purple"),row=2, col=1)
+fig.add_trace(go.Scatter(x=weekly_mean_slaes6["hour"][::-1], y=weekly_mean_slaes6["weekly_mean_slaes6"][::-1], showlegend=False, marker_color="orange"),row=2, col=1)
+fig.add_trace(go.Scatter(x=weekly_mean_slaes7["hour"][::-1], y=weekly_mean_slaes7["weekly_mean_slaes7"][::-1], showlegend=False, marker_color="red"),row=2, col=1)
+
+fig.update_layout(height=300*2, width=260*3, title_text="시간대별 매출액과 한 건당 결제금액", showlegend=True, font_size=12)
+fig.update_xaxes(title_text="시간", row=2, col=1)
+fig.update_yaxes(title_text="총 매출", row=1, col=1)
+fig.update_yaxes(title_text="한 건당 결제금액", row=2, col=1)
+
+fig.show()
+```  
+<img src="https://user-images.githubusercontent.com/72811950/105202679-985de380-5b85-11eb-9625-a4558ae1b41c.png" width="800" height="580"></img>
+- 12시와 18시에 카드 하나당 결제 금액이 낮아지는 것으로 보아 식사 후 각자 계산 하는 경우가 많은 것으로 추측
+- 10시와 15시에는 카드 하나당 결제 금액이 높아진다. 모임이나 쇼핑등으로 한 번에 큰 금액이 결제되는 것으로 추측
+- 20시에는 총 매출액이 가장 높고 한 건당 결제되는 금액도 높다. 술자리 때문이 아닐까 추측
+- 다른 요일에 비해 금요일은 늦은 시간까지 매출이 높다.
+- 일요일은 평일에 비해 일찍 매출이 떨어지기 시작한다.(19시에 매출 정점을 찍고 떨어지기 시작한다.)
+- 평일에는 12시와 20에 매출이 상승하다가 떨어지는 반면 토요일과 일요일은 1시와 19시에 매출이 상승했다 떨어진다.
 
 
 
