@@ -238,7 +238,7 @@ fig.update_layout(title='시간대 평일 VS 휴일 평균 매출',
                   font_size=12)
 fig.show()
 ```  
-<img src="https://user-images.githubusercontent.com/72811950/105204185-3d2cf080-5b87-11eb-9ef4-5c02b1129877.png" width="800" height="500"></img>
+<img src="https://user-images.githubusercontent.com/72811950/105204185-3d2cf080-5b87-11eb-9ef4-5c02b1129877.png" width="700" height="500"></img>
 - 시간대 매출 확인 결과 공휴일보다 평일에 사람들의 소비가 많았다.  
   
 #### 6) 휴일 전날과 아닌날의 매출 비교
@@ -265,7 +265,7 @@ fig.update_layout(title='공휴일 전날과 아닌 날의 매출 비교',
                   font_size=12)
 fig.show()
 ```  
-<img src="https://user-images.githubusercontent.com/72811950/105205061-29ce5500-5b88-11eb-8399-549cf7fd24c4.png" width="700" height="500"></img>
+<img src="https://user-images.githubusercontent.com/72811950/105205061-29ce5500-5b88-11eb-8399-549cf7fd24c4.png" width="800" height="500"></img>
 - 휴일 전날보다 평일에 사람들의 소비가 많이 이뤄진다.  
   
 #### 7) 일일 구매 횟수와 매출
