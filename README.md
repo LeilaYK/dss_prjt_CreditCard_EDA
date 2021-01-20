@@ -101,7 +101,7 @@ fig.update_yaxes(title_text="총 매출액", row=2, col=1)
 fig.show()
 ```  
 <img src="https://user-images.githubusercontent.com/72811950/105197959-84fc4980-5b80-11eb-9525-a58570afd938.png" width="800" height="580"></img>  
-12월에는 매출액이 증가하는 것을 볼 수 있다. 연말이라 사람들의 소비가 늘어난 것으로 보임.  
+- 12월에는 매출액이 증가하는 것을 볼 수 있다. 연말이라 사람들의 소비가 늘어난 것으로 보임.  
 
   
 2) 2017년의 시즌별 매출(월별로 확인)
