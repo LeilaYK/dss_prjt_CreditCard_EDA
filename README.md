@@ -24,11 +24,11 @@ pip install tqdm
 1. 데이터 확인
 2. 전처리
 3. 시간에 따른 매출 분석
-4. 할부내역 분석
-5. 거래취소내역 분석
+4. 할부 내역 분석
+5. 거래 취소내역 분석
 
-## 4. EDA(Exploratory data analysis)
-0) 환경 설정
+## 4. EDA(Exploratory Data Analysis)
+0) 패키지 불러오기
 ```
 from matplotlib import font_manager, rc
 from plotly.subplots import make_subplots
@@ -47,3 +47,7 @@ font_name = font_manager.FontProperties(fname=f_path).get_name()
 rc('font', family=font_name)
 ```
 1) 데이터 확인
+2) 전처리
+3) 시간에 따른 매출 분석
+4) 할부 내역 분석
+5) 거래 취소내역 분석
