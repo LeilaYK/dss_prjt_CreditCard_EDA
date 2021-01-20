@@ -45,12 +45,12 @@ rc('font', family=font_name)
 ```
 store_id :각 파일에서의 상점 고유 번호
 date : 거래 일자
-time :거래 시간
-card_id :카드 번호의 hash 값
-amount :매출액 (여기서 매출액은 KRW가 아님)
-installments : 할부개월수. 일시불은 빈 문자열
+time : 거래 시간
+card_id : 카드 번호의 hash 값
+amount : 매출액(여기서 매출액은 KRW가 아님)
+installments : 할부 개월 수. 일시불은 빈 문자열
 days_of_week : 요일, 월요일이 0, 일요일은 6
-holiday : 0이면 공휴일 아님, 1이면 공휴일
+holiday : 0은 공휴일 아닌 날, 1은 공휴일
 ```  
 
 - 데이터 유니크 값 개수  
@@ -59,11 +59,22 @@ holiday : 0이면 공휴일 아님, 1이면 공휴일
   <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="240" height="300"></img>  
   
 - 결측치 확인  
-installments 컬럼에 3345936개의 결측치 있음.  
+installments 컬럼에 3345936개의 결측치 있음  
   
-![newplot](https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png)
+  ![newplot](https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png)  
+  
+- 이상치 확인  
+전체 상점 일일 총 매출의 1/4을 차지할 정도로 큰 이상치가 있음  
+  
+  <img src="https://user-images.githubusercontent.com/72811950/105189511-61cd9c00-5b78-11eb-9dcd-e8aeb9b2f262.png" width="500" height="300"></img>
 
-### 2) 전처리
+
+### 2) 전처리  
+- 결측치 처리  
+installments에서 결측치는 일시불을 의미하니 1로 채움  
+  
+- 이상치 확인  
+
 
 
 ### 3) 시간에 따른 매출 분석
