@@ -52,12 +52,10 @@ installments : 할부 개월 수. 일시불은 빈 문자열
 days_of_week : 요일, 월요일이 0, 일요일은 6
 holiday : 0은 공휴일 아닌 날, 1은 공휴일
 ```  
-
 - 데이터 유니크 값 개수  
   1775개의 상점에서 922522개의 신용카드가 조사됨  
   
   <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="240" height="300"></img>  
-  
 - 결측치 확인  
   installments 컬럼에 3345936개의 결측치 있음  
 <img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="700" height="500"></img> 
