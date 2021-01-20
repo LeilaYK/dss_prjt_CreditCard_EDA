@@ -100,7 +100,7 @@ fig.update_yaxes(title_text="결제 횟수", row=1, col=1)
 fig.update_yaxes(title_text="총 매출액", row=2, col=1)
 fig.show()
 ```  
-<img src="https://user-images.githubusercontent.com/72811950/105197614-23d47600-5b80-11eb-87ff-c014f6edec9f.png" width="700" height="500"></img>
+<img src="https://user-images.githubusercontent.com/72811950/105197959-84fc4980-5b80-11eb-9525-a58570afd938.png" width="700" height="500"></img>
 
 
 
