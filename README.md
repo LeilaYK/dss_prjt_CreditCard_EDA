@@ -60,7 +60,6 @@ holiday : 0은 공휴일 아닌 날, 1은 공휴일
   
 - 결측치 확인  
   installments 컬럼에 3345936개의 결측치 있음  
-  
 <img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="700" height="500"></img> 
 
 ### 2) 전처리  
