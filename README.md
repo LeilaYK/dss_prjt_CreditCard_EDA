@@ -54,19 +54,22 @@ holiday : 0은 공휴일 아닌 날, 1은 공휴일
 ```  
 
 - 데이터 유니크 값 개수  
+  
 1775개의 상점에서 922522개의 신용카드가 조사됨  
   
   <img src="https://user-images.githubusercontent.com/72811950/105183034-1368cf00-5b71-11eb-8ccd-518850ebe4e9.png" width="240" height="300"></img>  
   
 - 결측치 확인  
+  
 installments 컬럼에 3345936개의 결측치 있음  
   
-<img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="600" height="350"></img> 
+<img src="https://user-images.githubusercontent.com/72811950/105180715-4198df80-5b6e-11eb-9c30-073937cf263d.png" width="700" height="450"></img> 
   
 - 이상치 확인  
+  
 전체 상점 일일 총 매출의 1/4을 차지할 정도로 큰 이상치가 있음  
   
-  <img src="https://user-images.githubusercontent.com/72811950/105189511-61cd9c00-5b78-11eb-9dcd-e8aeb9b2f262.png" width="600" height="350"></img>
+<img src="https://user-images.githubusercontent.com/72811950/105189511-61cd9c00-5b78-11eb-9dcd-e8aeb9b2f262.png" width="600" height="350"></img>
 
 
 ### 2) 전처리  
